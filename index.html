@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookNest - Digital Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+       
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>BookNest</h1>
+            </div>
+            <div class="header-actions">
+                <button id="addBookBtn" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add Book
+                </button>
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search books...">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Stats Cards -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div>
+                    <p>Total Books</p>
+                    <div id="totalBooks" class="stat-value">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div>
+                    <p>Available</p>
+                    <div id="availableBooks" class="stat-value">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon red">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div>
+                    <p>Borrowed</p>
+                    <div id="borrowedBooks" class="stat-value">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Books Section -->
+        <div class="section-title">
+            <h2>Your Library</h2>
+            <div class="filter-buttons">
+                <button id="filterAll" class="btn btn-primary">All</button>
+                <button id="filterAvailable" class="btn btn-secondary">Available</button>
+                <button id="filterBorrowed" class="btn btn-secondary">Borrowed</button>
+            </div>
+        </div>
+
+        <div id="booksContainer" class="books-grid">
+            <!-- Books will be dynamically inserted here -->
+        </div>
+
+        <div id="noBooksMessage" class="empty-state">
+            <i class="fas fa-book-open"></i>
+            <h3>No books found</h3>
+            <p>Add your first book to get started!</p>
+        </div>
+    </main>
+
+    <!-- Add Book Modal -->
+    <div id="addBookModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Book</h3>
+                <button id="closeModalBtn" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addBookForm">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" id="title" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="author">Author</label>
+                        <input type="text" id="author" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="isbn">ISBN</label>
+                        <input type="text" id="isbn" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pages">Pages</label>
+                        <input type="number" id="pages" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" class="form-control">
+                            <option value="available">Available</option>
+                            <option value="borrowed">Borrowed</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelAddBook" class="btn btn-secondary">Cancel</button>
+                <button id="submitBook" class="btn btn-primary">Add Book</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Details Modal -->
+    <div id="bookDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="bookDetailsTitle">Book Details</h3>
+                <button id="closeDetailsModalBtn" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="book-details">
+                    <div class="book-cover">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="book-info">
+                        <h4 id="detailBookTitle"></h4>
+                        <p id="detailBookAuthor"></p>
+                        <span id="detailBookStatus" class="book-status"></span>
+                    </div>
+                </div>
+                
+                <div class="detail-item">
+                    <span class="detail-label">ISBN:</span>
+                    <span id="detailBookIsbn" class="detail-value"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Pages:</span>
+                    <span id="detailBookPages" class="detail-value"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Added:</span>
+                    <span id="detailBookAdded" class="detail-value"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="toggleStatusBtn" class="btn btn-primary">
+                    <i class="fas fa-exchange-alt"></i> Toggle Status
+                </button>
+                <button id="deleteBookBtn" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Book added successfully!</span>
+    </div>
+
+    
+    <script src="./index.js"></script>
+</body>
+</html>
